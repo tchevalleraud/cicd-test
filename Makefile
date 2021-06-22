@@ -1,8 +1,9 @@
 include .env.local
 
-isDocker := $(bash docker info > /dev/null 2>&1 echo 1)
+user := $(shell id -u)
+group := $(shell id -g)
 
-ifeq ($(isDocker), 1)
+ifeq ($(user), 1)
 	test := "docker"
 else
 	test := "local"
