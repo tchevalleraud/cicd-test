@@ -5,7 +5,7 @@ on:
 
 jobs:
   init:
-    runs-on: [self-hosted]
+    runs-on: [docker-prod]
     steps:
       - name: check directory
         id: check-directory
@@ -27,3 +27,17 @@ jobs:
           mv cicd_test/ tchevalleraud-cicd_test
           cd ./tchevalleraud-cicd_test/
           touch .env.local
+  build:
+    runs-on: [docker-prod]
+    needs: [init]
+    steps:
+      - name: Build docker image
+        run: |
+          cd tchevalleraud-cicd_test/
+          make help
+          make docker-build
+      - name: Dependencies
+        run: |
+          cd tchevalleraud-cicd_test/
+          make vendor/autoload.php
+          make public/assets
