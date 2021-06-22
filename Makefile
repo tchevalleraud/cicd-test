@@ -1,5 +1,6 @@
 include .env.local
 
+isLinux := $(shell id -u > /dev/null 2>&1 echo 1)
 user := $(shell id -u)
 group := $(shell id -g)
 
@@ -10,6 +11,7 @@ else
 endif
 
 help:
+	echo $(isLinux)
 	echo $(user)
 	echo $(group)
 	echo $(test)
