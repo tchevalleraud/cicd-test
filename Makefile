@@ -10,4 +10,6 @@ else
 endif
 
 help:
+	echo $(user)
+	echo $(group)
 	echo $(test)
