@@ -7,13 +7,13 @@ jobs:
   init:
     runs-on: [production]
     steps:
-      - name: check directory
+      - name: Check directory
         id: check-directory
         continue-on-error: true
         run: |
           cd tchevalleraud-cicd_test
           echo ::set-output name=exist::true
-      - name: update exist project
+      - name: Update exist project
         if: steps.check-directory.outputs.exist == 'true'
         run: |
           cd tchevalleraud-cicd_test
@@ -25,8 +25,13 @@ jobs:
         run: |
           git clone git@github.com:tchevalleraud/cicd_test.git
           mv cicd_test/ tchevalleraud-cicd_test
-          cd ./tchevalleraud-cicd_test/
+      - name: Update environment
+        run: |
+          cd ./tchevalleraud-cicd_test
+          rm .env.local -f
           touch .env.local
+          echo "APP_ENV=prod" >> .env.local
+
   build:
     runs-on: [production]
     needs: [init]
