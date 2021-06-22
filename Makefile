@@ -34,10 +34,14 @@ server-start:
 # --------------------------------
 # Dépendances
 # --------------------------------
-public/assets:
+node_modules/time: yarn.lock
+	$(node) yarn
+	touch node_modules/time
+
+public/assets: node_modules/time
 	$(node) yarn
 	$(node) yarn run build
 
-vendor/autoload.php:
+vendor/autoload.php: composer.lock
 	$(php) composer update
 	touch vendor/autoload.php
