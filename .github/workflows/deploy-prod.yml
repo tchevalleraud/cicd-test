@@ -31,6 +31,7 @@ jobs:
           rm .env -f
           touch .env
           echo "APP_ENV=prod" >> .env
+          echo "DATABASE_URL=\"sqlite:///%kernel.project_dir%/var/data.db\"" >> .env
 
   build:
     runs-on: [production]
