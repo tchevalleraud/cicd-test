@@ -1,0 +1,29 @@
+name: Deploy on production
+on:
+  push:
+    branches: [master]
+
+jobs:
+  init:
+    runs-on: [self-hosted]
+    steps:
+      - name: check directory
+        id: check-directory
+        continue-on-error: true
+        run: |
+          cd tchevalleraud-cicd_test
+          echo ::set-output name=exist::true
+      - name: update exist project
+        if: steps.check-directory.outputs.exist == 'true'
+        run: |
+          cd tchevalleraud-cicd_test
+          git checkout master
+          git fetch origin --tags
+          git pull
+      - name: Deploy new project
+        if: steps.check-directory.outputs.exists != 'true'
+        run: |
+          git clone git@github.com:tchevalleraud/cicd_test.git
+          mv cicd_test/ tchevalleraud-cicd_test
+          cd ./tchevalleraud-cicd_test/
+          touch .env.local
