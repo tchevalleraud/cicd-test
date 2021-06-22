@@ -28,6 +28,9 @@ docker-build:
 	$(dc) build node
 	$(dc) build php
 
+server-start:
+	$(dc) up -d
+
 # --------------------------------
 # Dépendances
 # --------------------------------
