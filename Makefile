@@ -1,17 +1,25 @@
 include .env.local
 
-isLinux := $(shell id -u > /dev/null 2>&1 echo 1)
-user := $(shell id -u)
-group := $(shell id -g)
+user    := $(shell id -u)
+group   := $(shell id -g)
 
-ifeq ($(user), 1)
-	test := "docker"
-else
-	test := "local"
+ifeq ($(APP_ENV), prod)
+	dc := USER_ID=$(user) GROUP_ID=$(group) docker-compose -f docker-compose.prod.yaml
+else ifeq ($(APP_ENV), dev)
+	dc := USER_ID=$(user) GROUP_ID=$(group) docker-compose -f docker-composer.dev.yaml
 endif
 
+de := docker-compose exec
+dr := $(dc) run --rm
+sy := $(de) php bin/console
+
 help:
-	echo $(isLinux)
-	echo $(user)
-	echo $(group)
-	echo $(test)
+	@echo "################################"
+	@echo "# ENV :" $(APP_ENV)
+	@echo "################################"
+	@echo "docker-build"
+
+docker-build:
+	$(dc) pull --ignore-pull-failures
+	$(dc) build node
+	$(dc) build php
