@@ -21,7 +21,7 @@ jobs:
           git fetch origin --tags
           git pull
       - name: Deploy new project
-        if: steps.check-directory.outputs.exists != 'true'
+        if: steps.check-directory.outputs.exist != 'true'
         run: |
           git clone git@github.com:tchevalleraud/cicd_test.git
           mv cicd_test/ tchevalleraud-cicd_test
