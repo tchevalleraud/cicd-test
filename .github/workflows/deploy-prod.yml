@@ -5,7 +5,7 @@ on:
 
 jobs:
   init:
-    runs-on: [docker-prod]
+    runs-on: [production]
     steps:
       - name: check directory
         id: check-directory
@@ -28,7 +28,7 @@ jobs:
           cd ./tchevalleraud-cicd_test/
           touch .env.local
   build:
-    runs-on: [docker-prod]
+    runs-on: [production]
     needs: [init]
     steps:
       - name: Build docker image
