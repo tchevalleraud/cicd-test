@@ -29,8 +29,8 @@ jobs:
         run: |
           cd ./tchevalleraud-cicd_test
           rm .env.local -f
-          touch .env.local
-          echo "APP_ENV=prod" >> .env.local
+          touch .env
+          echo "APP_ENV=prod" >> .env
 
   build:
     runs-on: [production]
