@@ -1,4 +1,4 @@
-include .env.local
+include .env
 
 user    := $(shell id -u)
 group   := $(shell id -g)
